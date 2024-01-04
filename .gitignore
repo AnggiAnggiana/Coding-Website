@@ -1,0 +1,19 @@
+# Virtual Environment
+env/
+
+# File bytecode Python
+*.pyc
+__pycache__/
+
+# File konfigurasi lokal
+settings_local.py
+
+# Database MySQL
+*.db
+*.sql
+
+# File media yg dihasilkan oleh pengguna
+media/
+
+# File .env
+.env
