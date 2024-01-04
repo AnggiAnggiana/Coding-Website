@@ -1,0 +1,190 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <center>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>    
+        {% endfor %}
+    {% endif %}
+
+    {% if request.user.username %}
+        <h1>My Profile, {{request.user.username}} </h1>
+        <h1>Email: {{request.user.email}} </h1>
+    {% endif %}
+    <br><br>
+    {% if request.student.id %}
+        <li>First_name: {{ request.student.id }}</li>
+    {% endif %}
+    </center>
+    {% if submiited %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        <div class="profile-body">
+            <div class="container" style="display: flex; flex-wrap: wrap;">
+                {% for student in profile %}
+                    <table class="table tabel-kelas table-dark table-bordered border-primary">
+                        <tr>
+                            <td colspan="2"align="center">
+                                {% if student.profile_image %}
+                                    <div class="image-container">
+                                        <img src="{{ student.profile_image.url }}" class="size-profile-picture">
+                                        <div class="image-overlay">
+                                            <span class="view-image">Lihat Foto</span>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <a href="{% url 'edit_profile' %}" class="btn btn-warning">Edit Profile</a></td>
+                                    
+                                {% else %}
+                                    <div class="image-container">
+                                        <img src="{% static 'kelas_programming/images/no-profile-picture.png' %}" class="size-profile-picture">
+                                        <div class="image-overlay">
+                                            <span class="view-image">Lihat Foto</span>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <a href="{% url 'edit_profile' %}" class="btn btn-warning">Edit Profile</a></td>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">First Name:</td>
+                            <td>{{ student.first_name }}<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Last Name:</td>
+                            <td>{{ student.last_name }}<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Email:</td>
+                            <td>{{ student.email }}<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Address:</td>
+                            <td>{{ student.address }}<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Level:</td>
+                            <td>{{ student.get_level_display }}<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Profesi:</td>
+                            <td>{{ student.get_profesi_display }}<br></td>
+                        </tr>
+                    </table>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <style>
+        .profile-body{
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+
+        .tabel-kelas {
+            width: 1150px;
+        }
+
+        .tabel-kolom {
+            width: 140px;
+        }
+
+        .tabel-tombol {
+            width: 20px;
+        }
+
+        .size-profile-picture {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 450px;
+            z-index: 9999;
+        }
+
+        .image-popup img {
+            width: 600px;
+            height: 600px;
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+        }
+
+        .image-container:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .view-image {
+            color: white;
+            cursor: pointer;
+        }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Menambahkan efek click pada teks "Lihat Foto"
+            $('.view-image').on('click', function () {
+                let imageUrl = $(this).closest('.image-container').find('img').attr('src')
+
+                // menampilkan gambar secara pop up
+                showImagePopup(imageUrl)
+            })
+
+            // Fungsi untuk menampilkan gambar secara pop up
+            function showImagePopup(imageUrl) {
+                // Membuat elemen pop up nya
+                let popup = $('<div class="image-popup"><img src="' + imageUrl + '"></div>')
+
+                // Menambahkan pop-up ke body
+                $('body').append(popup)
+
+                // Membuat efek menutup pop up ketika saya mengklik di luar gambar
+                popup.on('click', function () {
+                    $(this).remove()
+                })
+            }
+        })
+    </script>
+{% endblock %}

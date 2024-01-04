@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="edit_kelas">
+        <h2>Edit kelas disini....</h2>
+        <br><br>
+        <form action="" class="form-control" method=POST>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <input type="submit" value="Edit" class="btn btn-primary">
+        </form>
+        <br>
+        <a href="{% url 'kelas' %}" class="btn btn-secondary"> Back </a>
+    </div>
+
+    <style>
+        .edit_kelas {
+            margin-left: 45px;
+            margin-right: 45px;;
+            padding-top: 6px;
+            width: 650px;
+        }
+
+        .form-control {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<center>
+<h1>Kelas Programming | Web Development</h1>
+<br><br>
+{% if request.user.username %}
+  <h3>Welcome {{request.user.username}}, please pick your course here: </h3>
+{% endif %}
+</center>
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+<br>
+<div class="container" style="display: flex; flex-wrap: wrap; gap: 20px;">
+{% for course in list_kelas_coding %}
+
+  <div class="accordion accordion-flush" id="accordionFlushExample{{ course.id }}" style="width: 28rem; flex: 1 0 300px;">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ course.id }}" aria-expanded="false" aria-controls="flush-collapse{{ course.id }}">
+          <strong>{{ course.name }}</strong>
+        </button>
+      </h2>
+      <div id="flush-collapse{{ course.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample{{ course.id }}">
+        <div class="accordion-body">
+          <ul class="list-group list-group-flush" style="display: flex;">
+            <li class="list-group-item">Kelas: {{ course.kelas }}</li>
+            <li class="list-group-item">Lecturer/Pengajar: {{ course.lecture }}</li>
+            <li class="list-group-item">Tanggal: {{ course.date }}</li>
+            <li class="list-group-item">Deskripsi: {{ course.description }}</li>
+
+              {% if user.is_authenticated and user.is_superuser %}
+                <li class="list-group-item">
+                  <a href="{% url 'edit_course' course.id %}" class="btn btn-outline-warning">Edit</a> &nbsp;&nbsp;&nbsp;
+                  <a href="{% url 'delete_course' course.id %}" class="btn btn-outline-danger">Delete</a></li>
+              {% endif %}
+
+              {% if user.is_authenticated %}
+                <li class="list-group-item">
+                  <a href="{% url 'view_kelas' course.kelas.id %}" class="btn btn-outline-secondary">Lihat</a>
+                </li>
+              {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<br>
+{% endfor %}
+</div>
+
+
+{% endblock %}
+
+

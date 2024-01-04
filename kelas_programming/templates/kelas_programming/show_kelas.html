@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <center>
+        <h1>{{view_kelas}}</h1>
+    </center>
+    <br><br>
+    <div class="view_kelas">
+        <strong>{{request.user.username}},</strong> yang akan kamu pelajari di kelas <strong>{{ view_kelas.name }}</strong> adalah:
+        <br><br>
+        <!-- Diambil dari models.py bagian class "Class" -->
+        <table class="table tabel-kelas table-dark table-bordered border-primary">
+            <tr>
+                <td>
+                    Bahasa: {{view_kelas.language}}<br>
+                </td>
+                
+                <td>
+                    Function: {{view_kelas.function}}
+                </td>
+                <br>
+                <td>
+                    Framework: {{view_kelas.framework}}
+                </td>
+                <br>
+                <td>
+                    Link: <a href=" {{class.link}}">{{ view_kelas.link }}</a>
+                </td>
+            </tr>
+        </table>
+        <br>
+        {% if view_kelas.photo %}
+            <img src="{{ view_kelas.photo.url }}" alt="{{ view_kelas.name }} Photo" class="class-photo">
+        {% endif %}
+        <br><br>
+        <div class="definition">
+            {{ view_kelas.definition }}
+        </div>
+    </div>
+    <br>
+    <center>
+        <form method="post">
+            {% csrf_token %}
+            <a href="{% url 'paymentKelas' view_kelas.id %}" class="btn btn-outline-primary" type="submit">Choose Class (Free)</a>
+        </form>
+        <br>
+    </center>
+
+
+    <style>
+        .view_kelas {
+            margin-left: 65px;
+        }
+
+        .tabel-kelas {
+            width: 990px;
+        }
+
+        .class-photo {
+            width: 550px;
+            height: 230px;
+            margin-left: 235px;
+        }
+
+        .definition {
+            text-align: justify;
+            margin-left: 45px;
+            margin-right: 110px;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    {% if submitted %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+
+    <center>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    </center>
+
+    <h1>Ayo mulai belajar, <strong>{{request.user.username}}</strong> </h1>
+    <br><br>
+    <div class="body">
+        {% for myclass in student %}
+            <div class="myclass">
+                <!-- Diambil dari models.py bagian class "Class" -->
+                <table class="table tabel-kelas table-dark table-bordered border-secondary">
+                    <tr>
+                        <td colspan="2">
+                            {% for learner in profile %}
+                                Siswa: {{ learner.first_name }} {{ learner.last_name }}</td>
+                            {% endfor %}
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" align="center">
+                            {{myclass.kelas_siswa.name}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="tabel-kolom">Language:</td>
+                        <td>{{ myclass.kelas_siswa.language }}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="tabel-kolom">Framework:</td>
+                        <td>{{ myclass.kelas_siswa.framework }}</td>
+                    </tr>
+                    <tr>
+                        <td class="tabel-kolom">Function:</td>
+                        <td>{{ myclass.kelas_siswa.function }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" align="center">
+                            <a href="{% url 'class_content' myclass.kelas_siswa.id %}" class="btn btn-outline-success">Masuk Kelas</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <style>
+                h1 {
+                    text-align: center;
+                }
+                .view_kelas {
+                    margin-left: 65px;
+                }
+
+                .myclass {
+                    display: inline-block;
+                    padding: 10px;
+                }
+
+                .tabel-kelas {
+                    width: 530px;
+                }
+
+                .body {
+                    margin-left: 35px;
+                    margin-right: 35px;
+                }
+
+                .tabel-kolom {
+                    width: 140px;
+                }
+            </style>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <center>
+        <h3>Silahkan Lakukan Pembayaran</h3>
+    </center>
+    <br>
+    <div class="payment">
+        <form action="" class="form-control" method=POST>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="button-position">
+                <input type="submit" value="Beli Kelas (Free)" class="btn btn-primary">
+            </div>
+        </form>
+        <br>
+    </div>
+
+    <style>
+        .payment {
+            margin-left: 45px;
+            margin-right: 45px;;
+            padding-top: 6px;
+            width: 650px;
+        }
+
+        .form-control {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .button-position {
+            text-align: center;
+        }
+    </style>
+{% endblock %}

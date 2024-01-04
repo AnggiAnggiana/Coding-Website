@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <center>
+        <h1>{{class_content}}</h1>
+    </center>
+    <br><br>
+    <div class="class_content">
+        {% for learner in profile %}
+            <h2>Good luck on your study {{ learner.first_name }} {{ learner.last_name }} !!</h2>
+        {% endfor %}
+        <br>
+        <!-- Diambil dari models.py bagian class "Class" -->
+        <table class="table tabel-kelas table-dark table-bordered border-primary">
+            <tr>
+                <td>
+                    Language: {{class_content.language}}<br>
+                </td>
+                
+                <td>
+                    Function: {{class_content.function}}
+                </td>
+                <br>
+                <td>
+                    Framework: {{class_content.framework}}
+                </td>
+                <br>
+            </tr>
+        </table>
+        <br>
+        <h2>Sesi 1:</h2><br>
+        {% if class_content.video %}
+            <div class="video-position">
+                <video controls width="540px" height="auto">
+                    <source src="{{ class_content.video.url }}" type="video/mp4">
+                </video>
+            </div>
+        {% endif %}
+    </div>
+    <br>
+
+
+    <style>
+        .class_content {
+            margin-left: 65px;
+        }
+
+        .tabel-kelas {
+            width: 990px;
+        }
+
+        .class-photo {
+            width: 550px;
+            height: 230px;
+            margin-left: 235px;
+        }
+
+        .definition {
+            text-align: justify;
+            margin-left: 45px;
+            margin-right: 110px;
+        }
+
+        .video-position {
+            text-align: center;
+        }
+    </style>
+{% endblock %}

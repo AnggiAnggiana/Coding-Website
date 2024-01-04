@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="badan">
+    <center>
+    {% block title %}
+        <h1>Silahkan Registrasi / Daftar disini!</h1>
+    {% endblock %}
+    </center>
+    <br>
+    <center>
+    {% block body %}
+        {% if form.errors %}
+        <p>Terjadi error pada registrasi</p>
+        {% endif %}
+        <form action="{% url 'register' %}" class="size-form" method=POST>
+            <div class="form-control">
+                <div class="mid-form">
+                    <p>Sudah punya akun? Silahkan <a href="{% url 'login' %}">login</a> </p>
+                </div>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="mid-form">
+                    <input type="submit" value="Submit" class="btn btn-primary">            
+                </div>
+            </div>
+        </form>
+    {% endblock %}
+    </center>
+</div>
+
+
+<style>
+    .badan {
+        margin-left: 40px;
+    }
+
+    .form-control ul, .helptext{
+        display: none;
+    }
+
+    .form-control {
+        width: 100%;
+        text-align: justify;
+    }
+
+    .mid-form {
+        text-align: center;
+    }
+
+    .size-form {
+        width: 540px;
+    }
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    {% if user.is_authenticated and user.is_superuser %}
+        <div class="add-course">
+            <h2>Add New Course</h2>
+
+        {% if submitted %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <div class="profile-body">
+                <div class="container" style="display: flex; flex-wrap: wrap;">
+                    <form action="" class="form-control" method="POST" enctype="multipart/form-data">
+                        <h4>Add Course:</h4>
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+                        <input type="submit" value="Submit" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+
+
+        <style>
+            .add-course {
+                margin-left: 45px;
+            }
+        </style>
+    {% else %}
+        <center>
+            Maaf, kamu tidak memiliki akses!!!
+        </center>
+    {% endif %}
+{% endblock %}

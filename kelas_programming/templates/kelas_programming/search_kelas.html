@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <center>
+    <br><br><br><br>
+    {% if mencari %}
+        <h4> "{{mencari}}" berhasil ditemukan </h4>
+        <br>
+        <h5>Hasil pencarian:</h5>
+        
+        {% for myclass in kelas %}
+            Kelas: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
+        {% endfor %}
+
+        {% for myclass in kelas1 %}
+            Kelas: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
+        {% endfor %}
+
+        {% for myclass in kelas2 %}
+            Kelas: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
+        {% endfor %}
+
+        {% for myclass in kelas3 %}
+            Kelas: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
+        {% endfor %}
+
+    {% else %}
+        <h4> Maaf, data tidak ditemukan... </h4>
+    {% endif %}
+    </center>
+{% endblock %}

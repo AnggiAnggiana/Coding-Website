@@ -1,0 +1,159 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <center>
+    {% if request.user.username %}
+        <h1>My Profile, {{request.user.username}} </h1>
+    {% endif %}
+    <br><br>
+    </center>
+    {% if submitted %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        <div class="profile-body">
+            <div class="container" style="display: flex; flex-wrap: wrap;">
+                <form action="" class="form-size" method="POST" enctype="multipart/form-data">
+                    <div class="form-control">
+                        <h4>Edit Profile:</h4>
+                        <div class="image-container" >
+                            <input type="file" name="profile_image" accept="image/*" id="id_profile_image" style="display: none;">
+                            <label for="id_profile_image" class="size-profile-picture">
+                                {% if form.instance.profile_image %}
+                                    <img src="{{ form.instance.profile_image.url }}" class="image-size">
+                                {% else %}
+                                    <img src="{% static 'kelas_programming/images/no-profile-picture.png' %}" class="image-size">
+                                {% endif %}
+                                <div class="image-overlay">
+                                    <span class="view-image">Ubah Foto</span>
+                                </div>
+                            </label>
+                        </div>
+                        <br><br><br>
+                        {% csrf_token %}
+
+                        {{ form.profile_image }}<br>
+                        {{ form.first_name }}<br>
+                        {{ form.last_name }}<br>
+                        {{ form.email }}<br>
+                        {{ form.address }}<br>
+                        <select class="form-select" name="{{ form.profesi.name }}">
+                            {% for profesi, profesi_label in form.fields.profesi.choices %}
+                                <option value="{{ profesi }}" {% if profesi == form.instance.profesi %}selected{% endif %}>{{ profesi_label }}</option>
+                            {% endfor %}
+                        </select><br>
+                        <select class="form-select" name="{{ form.level.name }}">
+                            {% for level, level_label in form.fields.level.choices %}
+                                <option value="{{ level }}" {% if level == form.instance.level %}selected{% endif %}>{{ level_label }}</option>
+                            {% endfor %}
+                        </select><br>
+                        <a href="{% url 'myprofile' %}" class="btn btn-danger"> Cancel</a>&nbsp;&nbsp;
+                        <input type="submit" value="Submit" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+    {% endif %}
+
+    <style>
+        .profile-body{
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+
+        .size-profile-picture {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+        }
+
+        .image-container:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .view-image {
+            color: white;
+            cursor: pointer;
+        }
+
+        .image-size {
+            width: 200px;
+            height: 200px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+        }
+
+        #id_profile_image {
+            display: none;
+        }
+        
+
+        #profile_image-clear_id {
+            display: none;
+        }
+
+        #profile_image-clear_id + label {
+            display: none;
+        }
+
+        .form-size {
+            width: 1150px;
+            text-align: center;
+        }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Menambahkan efek click pada teks "Ubah Foto"
+            
+
+            // Fungsi untuk menampilkan perubahan pada form input file
+            $('input[type="file"]').on('change', function () {
+                // Mengecek jika user sudah memilih file
+                if (this.files && this.files[0]) {
+                    // Menampilkan gambar yg dipilih
+                    let reader = new FileReader()
+                    reader.onload = function (e) {
+                        let img = $(this).closest('.image-container').find('img')
+                        if (img.length > 0){
+                            img.attr('src', e.target.result)
+                        }
+                    }.bind(this)
+                    reader.readAsDataURL(this.files[0])
+                }
+            })
+        })
+    </script>
+{% endblock %}
