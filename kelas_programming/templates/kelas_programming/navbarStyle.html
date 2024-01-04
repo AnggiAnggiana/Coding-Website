@@ -12,7 +12,7 @@
             {% endif %}
           </li>
           <li class="nav-item">
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and user.is_superuser %}
               <a class="nav-link active" aria-current="page" href="{% url 'kelas' %}">Daftar Kelas</a>
             {% endif %}
           </li>
@@ -40,10 +40,8 @@
                 Download
               </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="{% url 'download_class_csv' %}">Download CSV</a></li>
-                  <li><a class="dropdown-item" href="{% url 'download_class_pdf' %}">Download PDF</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><a class="dropdown-item" href="{% url 'download_class_csv' %}">Download "MyClass" in csv</a></li>
+                  <li><a class="dropdown-item" href="{% url 'download_class_pdf' %}">Download "MyClass" in pdf</a></li>
                 </ul>
             </li>
           {% endif %}

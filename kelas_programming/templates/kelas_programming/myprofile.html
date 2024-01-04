@@ -14,7 +14,6 @@
 
     {% if request.user.username %}
         <h1>My Profile, {{request.user.username}} </h1>
-        <h1>Email: {{request.user.email}} </h1>
     {% endif %}
     <br><br>
     {% if request.student.id %}
@@ -46,7 +45,6 @@
                                     </div>
                                     <br><br>
                                     <a href="{% url 'edit_profile' %}" class="btn btn-warning">Edit Profile</a></td>
-                                    
                                 {% else %}
                                     <div class="image-container">
                                         <img src="{% static 'kelas_programming/images/no-profile-picture.png' %}" class="size-profile-picture">
@@ -82,6 +80,56 @@
                         <tr>
                             <td class="tabel-kolom">Profesi:</td>
                             <td>{{ student.get_profesi_display }}<br></td>
+                        </tr>
+                    </table>
+                {% empty %}
+                    <table class="table tabel-kelas table-dark table-bordered border-primary">
+                        <tr>
+                            <td colspan="2"align="center">
+                                {% if student.profile_image %}
+                                    <div class="image-container">
+                                        <img src="{{ student.profile_image.url }}" class="size-profile-picture">
+                                        <div class="image-overlay">
+                                            <span class="view-image">Lihat Foto</span>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <a href="{% url 'edit_profile' %}" class="btn btn-warning">Edit Profile</a></td>
+                                {% else %}
+                                    <div class="image-container">
+                                        <img src="{% static 'kelas_programming/images/no-profile-picture.png' %}" class="size-profile-picture">
+                                        <div class="image-overlay">
+                                            <span class="view-image">Lihat Foto</span>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <a href="{% url 'edit_profile' %}" class="btn btn-warning">Edit Profile</a></td>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">First Name:</td>
+                            <td>Unknown<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Last Name:</td>
+                            <td>Unknown<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Email:</td>
+                            <td>Unknown<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Address:</td>
+                            <td>Unknown<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Level:</td>
+                            <td>Unknown<br></td>
+                        </tr>
+                        <tr>
+                            <td class="tabel-kolom">Profesi:</td>
+                            <td>Unknown<br></td>
                         </tr>
                     </table>
                 {% endfor %}

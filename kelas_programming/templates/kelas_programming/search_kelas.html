@@ -8,21 +8,18 @@
         <br>
         <h5>Hasil pencarian:</h5>
         
-        {% for myclass in kelas %}
-            Kelas: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
+        {% for myclass in course %}
+            Course Name: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
         {% endfor %}
 
-        {% for myclass in kelas1 %}
-            Kelas: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
+        {% for myclass in course1 %}
+            Class: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
         {% endfor %}
 
-        {% for myclass in kelas2 %}
-            Kelas: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
+        {% for myclass in course2 %}
+            Lecture: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
         {% endfor %}
 
-        {% for myclass in kelas3 %}
-            Kelas: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
-        {% endfor %}
 
     {% else %}
         <h4> Maaf, data tidak ditemukan... </h4>

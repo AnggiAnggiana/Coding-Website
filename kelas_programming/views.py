@@ -131,24 +131,6 @@ def view_kelas(request, kelas_id):
         'view_kelas': view_kelas})
     
 
-# Membuat page untuk content myclass
-@login_required
-def class_content(request, kelas_id):
-    student = Payment.objects.filter(siswa__owner=request.user.id)
-    profile = Student.objects.filter(owner=request.user.id)
-    class_content = Class.objects.get(pk=kelas_id)
-    return render(request, 'kelas_programming/class_content.html', {
-        'student': student,
-        'profile': profile,
-        'class_content': class_content,
-    })
-    
-# INI DATA "LOGIN WITH GOOGLE"
-# CLIENT ID: 511071097404-8kmoiupe2osf4rae7b34ft4oiel19lds.apps.googleusercontent.com
-# CLIENT SECRET: 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
-
-    
-
 # Page untuk pembayaran sebelum memilih kelas
 @login_required
 def paymentKelas(request, kelas_id):
@@ -181,6 +163,19 @@ def myclass(request):
         'student': student,
         'profile': profile
     })
+    
+# Membuat page untuk content myclass
+@login_required
+def class_content(request, kelas_id):
+    student = Payment.objects.filter(siswa__owner=request.user.id)
+    profile = Student.objects.filter(owner=request.user.id)
+    class_content = Class.objects.get(pk=kelas_id)
+    return render(request, 'kelas_programming/class_content.html', {
+        'student': student,
+        'profile': profile,
+        'class_content': class_content,
+    })
+    
 
 # Menambahkan pagination di def kelas ini
 @login_required 
@@ -203,13 +198,6 @@ def kelas(request):
 
 
 
-# Membuat page yg muncul hanya berdasarkan id kelas tertentu
-# @login_required
-# def show_kelas(request, kelas_id):
-#     show_kelas = Class.objects.get(pk=kelas_id)
-#     return render(request, 'kelas_programming/show_kelas.html', {'show_kelas': show_kelas})
-
-
 @login_required
 def edit_kelas(request, kelas_id):
     edit_kelas = Class.objects.get(pk=kelas_id)
@@ -229,22 +217,16 @@ def edit_kelas(request, kelas_id):
 def search_kelas(request):
     if request.method == "POST":
         mencari = request.POST['mencari']
-        # Link ke spesifik kelas
-        # kelas = Class.objects.all()
-        kelas = Class.objects.filter(framework__icontains=mencari)
-        kelas1 = Class.objects.filter(language__icontains=mencari)
-        kelas2 = Class.objects.filter(function__icontains=mencari)
-        kelas3 = Course.objects.filter(lecture__icontains=mencari)
-        return render(request, 'kelas_programming/search_kelas.html', {'mencari': mencari, 'kelas': kelas, 'kelas1': kelas1, 'kelas2': kelas2, 'kelas3': kelas3})
+        course = Course.objects.filter(name__icontains=mencari)
+        course1 = Course.objects.filter(kelas__icontains=mencari)
+        course2 = Course.objects.filter(lecture__icontains=mencari)
+        return render(request, 'kelas_programming/search_kelas.html', {'mencari': mencari, 'course': course, 'course1': course1, 'course2': course2})
     else:
         return render(request, 'kelas_programming/search_kelas', {})
     
 
 @login_required
 def myprofile(request):
-    # Semua data
-    # profile = Student.objects.all()
-
     # Hanya profile user tertentu
     profile = Student.objects.filter(owner=request.user.id)
     return render(request, 'kelas_programming/myprofile.html', {
@@ -254,7 +236,7 @@ def myprofile(request):
 @login_required
 def edit_profile(request):
     submitted = False
-    profile_edit = get_object_or_404(Student, owner=request.user.id)
+    profile_edit, created = Student.objects.get_or_create(owner=request.user.id)
     if request.method == 'POST':
         form = StudentForm(request.POST or None, request.FILES or None, instance=profile_edit)
         if form.is_valid():
@@ -281,20 +263,23 @@ def edit_profile(request):
 @login_required
 def download_class_csv(request):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=class.csv'
+    response['Content-Disposition'] = 'attachment; filename=myclass.csv'
 
     # Mencantumkan penulis filenya
     writer = csv.writer(response)
 
     # Isi filenya apa saja
-    classes = Class.objects.all()
+    student_data = Payment.objects.filter(siswa__owner=request.user.id)
 
     # Membuat kolom yg akan dibuat dalam file CSV
-    writer.writerow(['Class Name', 'Language', 'Framework', 'Function', 'Link'])
+    writer.writerow(['Siswa', 'Class Name', 'Language', 'Framework', 'Function'])
 
     # Membuat output di filenya
-    for kelas in classes:
-        writer.writerow([kelas.name, kelas.language, kelas.framework, kelas.function, kelas.link])
+    for data in student_data:
+        siswa = data.siswa
+        kelas_siswa = data.kelas_siswa
+        
+        writer.writerow([f"{siswa.first_name} {siswa.last_name}", kelas_siswa.name, kelas_siswa.language, kelas_siswa.framework, kelas_siswa.function])
     
     return response
 
@@ -314,19 +299,23 @@ def download_class_pdf(request):
     textobject = c.beginText()
     textobject.setTextOrigin(inch, inch)
     textobject.setFont("Helvetica", 12)
-
-    # Isi filenya apa saja
-    classes = Class.objects.all()
+    
+    # Isi file pdf yg di download
+    student_data = Payment.objects.filter(siswa__owner=request.user.id)
 
     # Membuat baris teks
     lines = []
 
-    for kelas in classes:
-        lines.append(kelas.name)
-        lines.append(kelas.language)
-        lines.append(kelas.framework)
-        lines.append(kelas.function)
-        lines.append(kelas.link)
+    
+    for data in student_data:
+        siswa = data.siswa
+        kelas_siswa = data.kelas_siswa
+        
+        lines.append(f"Siswa: {siswa.first_name} {siswa.last_name}")
+        lines.append(f"Kelas: {kelas_siswa.name}")
+        lines.append(f"Language: {kelas_siswa.language}")
+        lines.append(f"Framework: {kelas_siswa.framework}")
+        lines.append(f"Function: {kelas_siswa.function}")
         lines.append("---------------------------------------------")
 
     # Looping
@@ -339,24 +328,4 @@ def download_class_pdf(request):
     c.save()
     buf.seek(0)
 
-    return FileResponse(buf, as_attachment=True, filename='class.pdf')
-
-
-
-
-
-# def change_password(request):
-#     if request.method == 'POST':
-#         form = Change_PasswordForm(request.user, request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             update_session_auth_hash(request, user)
-#             messages.success(request, 'Password Berhasil Dirubah')
-#             return redirect(reverse('login'))
-#         else:
-#             messages.success(request, 'Password gagal dirubah')
-#             return redirect(reverse('change_password'))
-#     else:
-#         form = Change_PasswordForm()
-#     return render(request, 'kelas_programming/change_password.html', {'form': form})
-
+    return FileResponse(buf, as_attachment=True, filename='myclass.pdf')

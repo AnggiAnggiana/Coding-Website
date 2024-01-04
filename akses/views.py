@@ -68,7 +68,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
             messages.success(request, ('Kamu berhasil login'))
-            return(redirect('homepage'))
+            return(redirect('myprofile'))
         else:
             messages.success(request, ('Login tidak berhasil, ada kesalahan username atau password'))
             return(redirect('login'))
@@ -78,7 +78,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, ('Kamu sudah berhasil keluar, silahkan login kembali'))
-    return(redirect('homepage'))
+    return(redirect('login'))
 
 
 
