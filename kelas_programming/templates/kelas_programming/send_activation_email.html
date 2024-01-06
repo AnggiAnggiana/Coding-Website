@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KOSAN (Koding Santai)</title>
-</head>
+{% extends 'layout.html' %}
+
+{% block content %}
 <body>
     <center>
-    <h1>Activate Your Account now!! / Aktivasi Akunmu Sekarang!!</h1>
+    <h1>Activate Your Account now!!</h1>
     <p>Click the following button to activate your account:</p>
     <a href="{{% url 'activate_account' %}}" class="btn btn-primary">Activate Account</a>
     </center>
 </body>
-</html>
+{% endblock %}

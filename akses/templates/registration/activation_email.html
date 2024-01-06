@@ -1,5 +1,5 @@
 {% autoescape off %}
-    Hai {{user.username}}, Terima kasih sudah melakukan registrasi
-    Silahkan klik disini untuk aktivasi akun
-    <a href="http://{{domain}}{% url 'activate' uidb64=uid token=token %}" class="btn btn-primary">Aktivasi Akun</a>
+    Hai {{user.username}}, thank for your registration
+    Please click here to activate your account
+    <a href="http://{{domain}}{% url 'activate' uidb64=uid token=token %}" class="btn btn-primary">Activate Account</a>
 {% endautoescape %}

@@ -12,12 +12,12 @@ class Student(models.Model):
     owner = models.IntegerField(blank=False, default=1) #Dibuat hanya ketika membuat my profile page
     kelasku = models.ManyToManyField('Class', blank=True) #Dibuat untuk menambahkan Class untuk student yg berbeda-beda
     LEVEL_CHOICES = [
-        ('pemula', 'Pemula'),
-        ('menengah', 'Menengah'),
-        ('expert', 'Expert'),
+        ('Beginner', 'Beginner'),
+        ('Intermediate', 'Intermediate'),
+        ('Expert', 'Expert'),
     ]
 
-    level = models.CharField(max_length=30, choices=LEVEL_CHOICES, default='pemula')
+    level = models.CharField(max_length=30, choices=LEVEL_CHOICES, default='Beginner')
 
     PROFESI_CHOICES = [
         ('programmer-fulltime', 'Programmer-Fulltime'),
@@ -44,7 +44,7 @@ class Class(models.Model):
     def __str__(self):
         return self.name
 
-# Untuk payment kelas yg dipilih
+# For the choosen class (paid by user)
 class Payment(models.Model):
     siswa = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, blank=True)
     kelas_siswa = models.ForeignKey(Class, on_delete=models.SET_NULL, null=True, blank=True)
@@ -62,11 +62,10 @@ class Course(models.Model):
         return self.name
 
 
-
-# Untuk Profile User
+# For user profile
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    activation_key = models.CharField(max_length=255, default=1, unique=True)
+    activation_key = models.CharField(max_length=255, unique=True)
     email_validated = models.BooleanField(default=False)
 
     def __str__(self):

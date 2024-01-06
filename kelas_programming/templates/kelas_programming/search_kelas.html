@@ -4,25 +4,35 @@
     <center>
     <br><br><br><br>
     {% if mencari %}
-        <h4> "{{mencari}}" berhasil ditemukan </h4>
+        <h4> "{{mencari}}" was found </h4>
         <br>
-        <h5>Hasil pencarian:</h5>
+        <h5>Search result:</h5>
         
-        {% for myclass in course %}
-            Course Name: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
-        {% endfor %}
+        <div class="form-search-result">
+            <table class="table tabel-kelas table-bordered border-secondary">
+                {% for myclass in course %}
+                    <tr>
+                        <td> Course: </td>
+                        <td> <a href="{% url 'list_kelas' %}">{{ myclass }}</a> </td>
+                    </tr>
+                {% endfor %}
 
-        {% for myclass in course1 %}
-            Class: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
-        {% endfor %}
-
-        {% for myclass in course2 %}
-            Lecture: <a href="{% url 'show_kelas' myclass.id %}">{{ myclass }}</a><br>
-        {% endfor %}
-
-
+                {% for myclass in course1 %}
+                    <tr>
+                        <td> Class: </td>
+                        <td> <a href="{% url 'view_kelas' myclass.id %}">{{ myclass }}</a> </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     {% else %}
-        <h4> Maaf, data tidak ditemukan... </h4>
+        <h4> Sorry, your request didn't match with any results... </h4>
     {% endif %}
     </center>
+
+    <style>
+        .form-search-result {
+            width: 390px;
+        }
+    </style>
 {% endblock %}

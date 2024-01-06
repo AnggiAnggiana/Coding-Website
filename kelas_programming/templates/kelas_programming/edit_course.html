@@ -2,21 +2,24 @@
 
 {% block content %}
     <div class="edit_course">
-        <h2>Edit course disini....</h2>
-        <br><br>
+        <h2>Edit course here....</h2>
+        <br>
         <form action="" class="form-control" method=POST>
             {% csrf_token %}
             {{ form.as_p }}
-            <br>
-            <input type="submit" value="Edit" class="btn btn-primary">
+            <div class="button-position">
+                <a href="{% url 'list_kelas' %}" class="btn btn-secondary">  Back </a> &nbsp;&nbsp; <input type="submit" value="Edit" class="btn btn-primary">
+            </div>
         </form>
-        <br>
-        <a href="{% url 'list_kelas' %}" class="btn btn-secondary"> << Back </a>
     </div>
 
     <style>
+        h2 {
+            text-align: center;
+        }
+
         .edit_course {
-            margin-left: 45px;
+            margin-left: 265px;
             margin-right: 45px;;
             padding-top: 6px;
             width: 650px;
@@ -26,5 +29,30 @@
             padding: 5px;
             margin-bottom: 10px;
         }
+
+        .button-position {
+            text-align: center;
+        }
+
+        @media only screen and (max-width: 600px) {
+            /* Gaya CSS untuk layar berukuran kecil (contoh: smartphone) */
+            .edit_course{
+                margin-left: 20px;
+                margin-right: 10px;
+                width: 350px;
+            }
+
+            h2 {
+                text-align: justify;
+                margin-left: 80px;
+            }
+            
+            .form-control{
+                width: 100%;
+            }
+
+
+        }
+
     </style>
 {% endblock %}

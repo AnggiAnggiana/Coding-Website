@@ -23,8 +23,8 @@
     {% endif %}
     </center>
 
-    <h1>Ayo mulai belajar, <strong>{{request.user.username}}</strong> </h1>
-    <br><br>
+    <h1>Get started to learn, <strong>{{request.user.username}}</strong> </h1>
+    <br>
     <div class="body">
         {% for myclass in student %}
             <div class="myclass">
@@ -33,7 +33,7 @@
                     <tr>
                         <td colspan="2">
                             {% for learner in profile %}
-                                Siswa: {{ learner.first_name }} {{ learner.last_name }}</td>
+                                Me: {{ learner.first_name }} {{ learner.last_name }}</td>
                             {% endfor %}
                     </tr>
 
@@ -59,7 +59,7 @@
 
                     <tr>
                         <td colspan="2" align="center">
-                            <a href="{% url 'class_content' myclass.kelas_siswa.id %}" class="btn btn-outline-success">Masuk Kelas</a>
+                            <a href="{% url 'class_content' myclass.kelas_siswa.id %}" class="btn btn-outline-success">View Class</a>
                         </td>
                     </tr>
                 </table>
@@ -89,6 +89,22 @@
 
                 .tabel-kolom {
                     width: 140px;
+                }
+
+                @media only screen and (max-width: 600px) {
+                    /* Gaya CSS untuk layar berukuran kecil (contoh: smartphone) */
+                    .body {
+                        margin-left: 2px;
+                    }
+
+                    .tabel-kelas {
+                        margin-left: 10px;
+                        width: 350px;
+                    }
+
+                    .form-control {
+                        width: 100%;
+                    }
                 }
             </style>
         {% endfor %}

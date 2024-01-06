@@ -10,6 +10,7 @@ from django.utils.encoding import force_bytes
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from decouple import config
 
 def register_user(request):
     if request.method == 'POST':
@@ -24,7 +25,7 @@ def register_user(request):
             user.is_active = False
             user.save()
 
-            subject = 'Aktivasi akun anda sekarang!'
+            subject = 'Activate your account now!'
             message = render_to_string('registration/activation_email.html', {
                 'user': user,
                 'domain': get_current_site(request).domain,
@@ -32,10 +33,8 @@ def register_user(request):
                 'token': account_activation_token.make_token(user)
             })
 
-            # user.email_user(subject, message)
-            send_mail(subject, message, 'anggiana0092@gmail.com', [user.email], fail_silently=False)
+            send_mail(subject, message, config('EMAIL_HOST_USER'), [user.email], fail_silently=False)
             
-            # login(request, user)
             return redirect('send_activation')
     else:
         form = RegisterUserForm()
@@ -54,10 +53,10 @@ def activate(request, uidb64, token):
         user.save()
 
         login(request, user)
-        messages.success(request, 'Akun berhasil diaktifkan, silahkan login')
+        messages.success(request, 'Your account already activated, please login')
         return redirect('login')
     else:
-        messages.error(request, 'Aktivasi akun gagal')
+        messages.error(request, 'Activate account is failed')
         return redirect('register')
 
 def login_user(request):
@@ -67,32 +66,16 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, ('Kamu berhasil login'))
+            messages.success(request, ("now you're logged in"))
             return(redirect('myprofile'))
         else:
-            messages.success(request, ('Login tidak berhasil, ada kesalahan username atau password'))
+            messages.success(request, ('Login failed, your username or password is wrong'))
             return(redirect('login'))
     else:
         return render(request, 'registration/login.html', {})
     
 def logout_user(request):
     logout(request)
-    messages.success(request, ('Kamu sudah berhasil keluar, silahkan login kembali'))
+    messages.success(request, ("You have logged out, please login again"))
     return(redirect('login'))
 
-
-
-# def change_password(request):
-#     if request.method == 'POST':
-#         form = PasswordChangeForm(request.user, request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             update_session_auth_hash(request, user)
-#             messages.success(request, 'Password berhasil diganti')
-#             return redirect(reverse('login'))
-#         else:
-#             messages.success(request, 'Pasword Gagal diganti')
-#             return redirect(reverse('change_password'))
-#     else:
-#         form = PasswordChangeForm(request.user)
-#     return render(request, 'change_password.html', {'form': form})

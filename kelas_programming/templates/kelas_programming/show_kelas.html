@@ -6,13 +6,12 @@
     </center>
     <br><br>
     <div class="view_kelas">
-        <strong>{{request.user.username}},</strong> yang akan kamu pelajari di kelas <strong>{{ view_kelas.name }}</strong> adalah:
-        <br><br>
+        <strong>{{request.user.username}},</strong> in <strong>{{ view_kelas.name }}</strong> you will learn:
         <!-- Diambil dari models.py bagian class "Class" -->
         <table class="table tabel-kelas table-dark table-bordered border-primary">
             <tr>
                 <td>
-                    Bahasa: {{view_kelas.language}}<br>
+                    Language: {{view_kelas.language}}<br>
                 </td>
                 
                 <td>
@@ -66,6 +65,28 @@
             text-align: justify;
             margin-left: 45px;
             margin-right: 110px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            /* Gaya CSS untuk layar berukuran kecil (contoh: smartphone) */
+            .view_kelas {
+                margin-left: 10px;
+            }
+
+            .tabel-kelas {
+                width: 100%;
+            }
+
+            .class-photo {
+                width: 100%;
+                height: auto;
+                margin-left: 0;
+            }
+
+            .definition {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
         }
     </style>
 {% endblock %}

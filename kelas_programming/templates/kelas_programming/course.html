@@ -2,7 +2,7 @@
 
 {% block content %}
 <center>
-<h1>Kelas Programming | Web Development</h1>
+<h1>Programming Course | Web Development</h1>
 <br><br>
 {% if request.user.username %}
   <h3>Welcome {{request.user.username}}, please pick your course here: </h3>
@@ -30,10 +30,10 @@
       <div id="flush-collapse{{ course.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample{{ course.id }}">
         <div class="accordion-body">
           <ul class="list-group list-group-flush" style="display: flex;">
-            <li class="list-group-item">Kelas: {{ course.kelas }}</li>
+            <li class="list-group-item">Class: {{ course.kelas }}</li>
             <li class="list-group-item">Lecturer/Pengajar: {{ course.lecture }}</li>
-            <li class="list-group-item">Tanggal: {{ course.date }}</li>
-            <li class="list-group-item">Deskripsi: {{ course.description }}</li>
+            <li class="list-group-item">Date: {{ course.date }}</li>
+            <li class="list-group-item">Description: {{ course.description }}</li>
 
               {% if user.is_authenticated and user.is_superuser %}
                 <li class="list-group-item">
@@ -43,7 +43,7 @@
 
               {% if user.is_authenticated %}
                 <li class="list-group-item">
-                  <a href="{% url 'view_kelas' course.kelas.id %}" class="btn btn-outline-secondary">Lihat</a>
+                  <a href="{% url 'view_kelas' course.kelas.id %}" class="btn btn-outline-secondary">Select</a>
                 </li>
               {% endif %}
           </ul>

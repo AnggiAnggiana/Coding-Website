@@ -15,10 +15,7 @@
     {% if request.user.username %}
         <h1>My Profile, {{request.user.username}} </h1>
     {% endif %}
-    <br><br>
-    {% if request.student.id %}
-        <li>First_name: {{ request.student.id }}</li>
-    {% endif %}
+    <br>
     </center>
     {% if submiited %}
         {% if messages %}
@@ -40,7 +37,7 @@
                                     <div class="image-container">
                                         <img src="{{ student.profile_image.url }}" class="size-profile-picture">
                                         <div class="image-overlay">
-                                            <span class="view-image">Lihat Foto</span>
+                                            <span class="view-image">View Picture</span>
                                         </div>
                                     </div>
                                     <br><br>
@@ -49,7 +46,7 @@
                                     <div class="image-container">
                                         <img src="{% static 'kelas_programming/images/no-profile-picture.png' %}" class="size-profile-picture">
                                         <div class="image-overlay">
-                                            <span class="view-image">Lihat Foto</span>
+                                            <span class="view-image">View Picture</span>
                                         </div>
                                     </div>
                                     <br><br>
@@ -78,7 +75,7 @@
                             <td>{{ student.get_level_display }}<br></td>
                         </tr>
                         <tr>
-                            <td class="tabel-kolom">Profesi:</td>
+                            <td class="tabel-kolom">Profession:</td>
                             <td>{{ student.get_profesi_display }}<br></td>
                         </tr>
                     </table>
@@ -90,7 +87,7 @@
                                     <div class="image-container">
                                         <img src="{{ student.profile_image.url }}" class="size-profile-picture">
                                         <div class="image-overlay">
-                                            <span class="view-image">Lihat Foto</span>
+                                            <span class="view-image">View Picture</span>
                                         </div>
                                     </div>
                                     <br><br>
@@ -99,7 +96,7 @@
                                     <div class="image-container">
                                         <img src="{% static 'kelas_programming/images/no-profile-picture.png' %}" class="size-profile-picture">
                                         <div class="image-overlay">
-                                            <span class="view-image">Lihat Foto</span>
+                                            <span class="view-image">View Picture</span>
                                         </div>
                                     </div>
                                     <br><br>
@@ -206,6 +203,18 @@
             cursor: pointer;
         }
 
+        @media only screen and (max-width: 600px) {
+            /* Gaya CSS untuk layar berukuran kecil (contoh: smartphone) */
+            .profile-body{
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            .tabel-kelas {
+                width: 980px;
+            }
+            
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

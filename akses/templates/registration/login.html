@@ -4,9 +4,8 @@
 <div class="badan">
     <center>
     {% block title %}
-        <h1>Silahkan Login / Login disini!</h1>
+        <h1>Please Login / Login here!</h1>
     {% endblock %}
-    <br>
     
     <div class="container">
         {% if messages %}
@@ -30,7 +29,7 @@
         <form method="post" class="size-form">            
             <div class="form-control">
                 <div class="mid-form">
-                    <p>Belum punya akun? Silahkan <a href="{% url 'register' %}">Register</a></p>
+                    <p>Don't have an account? Please <a href="{% url 'register' %}">Register</a></p>
                 </div>
                 {% csrf_token %}
                 <div class="mb-3">
@@ -85,6 +84,23 @@
         width: 540px;
     }
 
+    @media only screen and (max-width: 600px) {
+        /* Gaya CSS untuk layar berukuran kecil (contoh: smartphone) */
+        .badan {
+            margin-left: 0px;
+        }
+        
+        .container {
+            width: 350px;
+            height: 30px;
+            margin-left: 20px;
+        }
+
+        .size-form{
+            margin-left: 7px;
+            width: 350px;
+        }
+    }
 </style>
 
 {% endblock %}

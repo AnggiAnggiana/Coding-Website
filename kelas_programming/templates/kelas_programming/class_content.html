@@ -6,10 +6,11 @@
     </center>
     <br><br>
     <div class="class_content">
-        {% for learner in profile %}
-            <h2>Good luck on your study {{ learner.first_name }} {{ learner.last_name }} !!</h2>
-        {% endfor %}
-        <br>
+        <div class="good-luck">
+            {% for learner in profile %}
+                <h2>Good luck on your study, {{ learner.first_name }} {{ learner.last_name }} !!</h2>
+            {% endfor %}
+        </div>
         <!-- Diambil dari models.py bagian class "Class" -->
         <table class="table tabel-kelas table-dark table-bordered border-primary">
             <tr>
@@ -63,6 +64,30 @@
 
         .video-position {
             text-align: center;
+        }
+
+        @media only screen and (max-width: 600px) {
+            /* Gaya CSS untuk layar berukuran kecil (contoh: smartphone) */
+            h1 {
+                font-size: 25px;
+            }
+            
+            .good-luck h2{
+                margin-left: 2px;
+                font-size: 22px;
+            }
+
+            .class_content {
+                margin-left: 10px;
+            }
+
+            .tabel-kelas {
+                width: 370px;
+            }
+
+            .video-position video{
+                width: 100%;
+            }
         }
     </style>
 {% endblock %}

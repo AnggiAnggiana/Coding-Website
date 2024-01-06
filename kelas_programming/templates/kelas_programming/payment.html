@@ -2,7 +2,7 @@
 
 {% block content %}
     <center>
-        <h3>Silahkan Lakukan Pembayaran</h3>
+        <h3>Your Payment</h3>
     </center>
     <br>
     <div class="payment">
@@ -10,7 +10,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             <div class="button-position">
-                <input type="submit" value="Beli Kelas (Free)" class="btn btn-primary">
+                <input type="submit" value="Buy Class (Free)" class="btn btn-primary">
             </div>
         </form>
         <br>
@@ -18,7 +18,7 @@
 
     <style>
         .payment {
-            margin-left: 45px;
+            margin-left: 355px;
             margin-right: 45px;;
             padding-top: 6px;
             width: 650px;
@@ -31,6 +31,22 @@
 
         .button-position {
             text-align: center;
+        }
+
+        @media only screen and (max-width: 600px) {
+            /* Gaya CSS untuk layar berukuran kecil (contoh: smartphone) */
+            h3 {
+                margin-left: 20px;
+            }
+
+            .payment {
+                margin-left: 40px;
+                width: 300px;
+            }
+
+            .form-control {
+                width: 100%;
+            }
         }
     </style>
 {% endblock %}

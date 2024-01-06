@@ -4,19 +4,19 @@
 <div class="badan">
     <center>
     {% block title %}
-        <h1>Silahkan Registrasi / Daftar disini!</h1>
+        <h1>Please Register / Register here!</h1>
     {% endblock %}
     </center>
     <br>
     <center>
     {% block body %}
         {% if form.errors %}
-        <p>Terjadi error pada registrasi</p>
+        <p>There is an error on registration</p>
         {% endif %}
         <form action="{% url 'register' %}" class="size-form" method=POST>
             <div class="form-control">
                 <div class="mid-form">
-                    <p>Sudah punya akun? Silahkan <a href="{% url 'login' %}">login</a> </p>
+                    <p>Already have an account? Please <a href="{% url 'login' %}">login</a> </p>
                 </div>
                 {% csrf_token %}
                 {{ form.as_p }}
@@ -50,6 +50,24 @@
 
     .size-form {
         width: 540px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        /* Gaya CSS untuk layar berukuran kecil (contoh: smartphone) */
+        .badan {
+            margin-left: 0px;
+        }
+        
+        .container {
+            width: 350px;
+            height: 30px;
+            margin-left: 20px;
+        }
+
+        .size-form{
+            margin-left: 5px;
+            width: 350px;
+        }
     }
 
 </style>

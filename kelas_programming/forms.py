@@ -9,7 +9,7 @@ from .models import Payment
 from django.contrib.auth.models import User
 
 
-# Membuat form untuk data siswa
+# Create form for student data
 class StudentForm(ModelForm):
     class Meta:
         model = Student
@@ -31,7 +31,7 @@ class StudentForm(ModelForm):
     profesi = forms.ChoiceField(choices=Student.PROFESI_CHOICES)
     level = forms.ChoiceField(choices=Student.LEVEL_CHOICES)
 
-# Membuat form untuk Class/kelas
+# Create form for class Kelas
 class ClassForm(ModelForm):
     class Meta:
         model = Class
@@ -53,17 +53,16 @@ class ClassForm(ModelForm):
         }
 
 
-# Membuat form untuk Course
+# Create form for course
 class CourseForm(ModelForm):
     class Meta:
         model = Course
-        fields = ('name', 'date', 'lecture', 'kelas', 'description', 'myclass')
+        fields = ('name', 'date', 'lecture', 'kelas', 'description')
         labels = {
             'name': '',
             'date': 'YYYY-MM-DD HH:MM:SS',
             'lecture': '',
             'description': '',
-            'myclass': 'Student',
         }
 
         widgets = {
@@ -71,38 +70,10 @@ class CourseForm(ModelForm):
             'date': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Date'}),
             'lecture': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Lecture'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description'}),
-            'myclass': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Student'}),
+            'kelas': forms.Select(attrs={'class': 'form-control'}),
         }
 
-# VERSI UDAH JADI TAPI TAMPILAN JELEK
-# Untuk payment kelas yg dipilih siswa
-# class PaymentForm(ModelForm):
-#     class Meta:
-#         model = Payment
-#         fields = ('siswa', 'kelas_siswa')
-        
-#         widgets = {
-#             # 'siswa': forms.TextInput(attrs={'class': 'form-control'}),
-#         }
-        
-#     def __init__(self, *args, **kwargs):
-#         user = kwargs.pop('user', None)
-#         kelas_id = kwargs.pop('kelas_id', None)
-#         super(PaymentForm, self).__init__(*args, **kwargs)
-        
-#         # Hanya menampilkan data siswa yg sedang login
-#         self.fields['siswa'].instance = Student.objects.filter(owner=user.id)
-        
-#         # Set nilai default ke siswa yg login
-#         default_siswa = Student.objects.get(owner=user.id)
-#         self.initial['siswa'] = default_siswa.id
-        
-#         # Hanya menampilkan data kelas yg dipilih
-#         self.fields['kelas_siswa'].instance = Class.objects.filter(id=kelas_id)
-#         self.initial['kelas_siswa'] = kelas_id
-
-
-# VERSI BING
+# Create form for "payment"
 class PaymentForm(ModelForm):
     siswa = forms.ModelChoiceField(queryset=Student.objects.all(), widget=forms.Select(attrs={'class': 'form-control', 'readonly': 'readonly'}))
     kelas_siswa = forms.ModelChoiceField(queryset=Class.objects.all(), widget=forms.Select(attrs={'class': 'form-control', 'readonly': 'readonly'}))
@@ -116,11 +87,11 @@ class PaymentForm(ModelForm):
         kelas_id = kwargs.pop('kelas_id', None)
         super(PaymentForm, self).__init__(*args, **kwargs)
         
-        # Hanya menampilkan data siswa yg sedang login & kelas yg dipilih
+        # Just show student data (login now) & the choosen class
         self.fields['siswa'].queryset = Student.objects.filter(owner=user.id)
         self.fields['kelas_siswa'].queryset = Class.objects.filter(id=kelas_id)
         
-        # Hanya menampilkan data siswa yg sedang login & kelas yg dipilih
+        # Just show student data (login now) & the choosen class
         siswa_instance = Student.objects.filter(owner=user.id).first()
         kelas_instance = Class.objects.filter(id=kelas_id).first()
         

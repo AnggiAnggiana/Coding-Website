@@ -8,7 +8,6 @@ from .models import Payment
 # admin.site.register(Class)
 # admin.site.register(Student)
 
-# Membuat tombol search dan membuat daftar isi
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
