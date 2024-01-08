@@ -79,3 +79,5 @@ def logout_user(request):
     messages.success(request, ("You have logged out, please login again"))
     return(redirect('login'))
 
+def login(request):
+    return render(request, 'login.html')
