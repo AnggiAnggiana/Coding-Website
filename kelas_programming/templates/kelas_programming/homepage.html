@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-<center>
 {% if messages %}
     {% for message in messages %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -12,24 +11,201 @@
     {% endfor %}
 {% endif %}
 
-<h1>Welcome to KOSAN (Koding Santai) Coding Website</h1>
-<h3>Don't wait for too long to learn coding, now you're in {{ month }} {{ year }}.</h3>
-<h3>It's now or never to change your life.</h3>
-<br><br>
-{{ kalender|safe }}
-<br><br>
+{% if user.is_authenticated %}
+    <div class="container">
+        <div class="home-in">
+            <div class="header">
+                <a href="{% url 'homepage' %}">
+                    <img src="{% static 'kelas_programming/images/koding_santai_kecil.png' %}" class="coding-icon">
+                </a>
+                <h1>Welcome to "KOSAN (Koding Santai)" Coding Website</h1>
+            </div>
+            <h3>Don't wait for too long to learn coding, now you're in {{ month }} {{ year }}.</h3>
+            <h3>It's now or never to change your life.</h3>
+            <br><br>
+            {{ kalender|safe }}
+            <br><br>
+            <div class="footer">
+                <div class="learn">
+                    <h4> Time is money, Hurry up!</h4>
+                    <h4> {{ time }} </h4><br>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="container">
+        <div class="header">
+            <a href="{% url 'homepage' %}">
+                <img src="{% static 'kelas_programming/images/koding_santai_kecil.png' %}" class="coding-icon">
+            </a>
+            <h1>Coding Website "KOSAN (Koding Santai)" </h1>
+        </div>
+        <div class="body-container">
+            <div class="body-homepage">
+                <h3>Learn the world of coding, and build your own website.</h3>
+                <h3>It's your time to enhance your programming skills.</h3><br>
+                <img src="{% static 'kelas_programming/images/banner.png' %}" class="google-icon">
+                <br><br>
+                <a href="{% url 'login' %}" class="btn btn-success btn-pos">Get Started</a>
+            </div>
+            <div class="sidebar" style="max-height: 500px; overflow-y: auto;">
+                <h4 class="pos-fit">Position you can fit for:</h4><br>
+                <div class="" style="width: 16rem">
+                    <div class="">
+                        <button class="btn btn-white" type="button" data-bs-toggle="collapse" data-bs-target="#frontend-collapse" aria-expanded="false">
+                            <h4>Frontend Developer</h4>
+                        </button>
+                        <div id="frontend-collapse" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <ul class="list-group list-group-flush" style="display: flex;">
+                                    <p> A front-end developer is a type of software developer who specializes in creating and designing the user interface (UI) and user experience (UX) of websites and web applications.</p>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="btn btn-white" type="button" data-bs-toggle="collapse" data-bs-target="#backend-collapse" aria-expanded="false" >
+                            <h4>Backend Developer</h4>
+                        </button>
+                        <div id="backend-collapse" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <ul class="list-group list-group-flush" style="display: flex;">
+                                    <p>A back-end developer is a type of programmer who creates the logical back-end and core computational logic of a website, software or information system.</p>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="btn btn-white" type="button" data-bs-toggle="collapse" data-bs-target="#fullstack-collapse" aria-expanded="false" >
+                            <h4>Full Stack Developer</h4>
+                        </button>
+                        <div id="fullstack-collapse" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <ul class="list-group list-group-flush" style="display: flex;">
+                                    <p>A full-stack developer is a programmer who works within software development and is knowledgeable in both the front end and back end of an application. They work to create a seamless user experience through their diverse skill set. They're also well-versed in databases, server configuration and user interface.</p>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="learn">
+                <h4>What you will learn:</h4><br>
+            </div>
+            <img src="{% static 'kelas_programming/images/html.png' %}" class="language-icon">
+            <img src="{% static 'kelas_programming/images/css.png' %}" class="language-icon">
+            <img src="{% static 'kelas_programming/images/javascript.png' %}" class="language-icon">
+            <img src="{% static 'kelas_programming/images/reactjs.png' %}" class="language-icon">
+            <img src="{% static 'kelas_programming/images/nodejs.png' %}" class="language-icon">
+            <img src="{% static 'kelas_programming/images/python.png' %}" class="language-icon">
+            <img src="{% static 'kelas_programming/images/django.png' %}" class="language-icon">
+            <img src="{% static 'kelas_programming/images/mysql.png' %}" class="language-icon">
+            <img src="{% static 'kelas_programming/images/sqlite.png' %}" class="language-icon">
+        </div>
+    </div>
+{% endif %}
 
-{% for student in course.myclass.all %}
-    {% if student.profile_image %}
-        <img src="{{ student.profile_image.url }}" alt="{{ student.first_name }}'s profile image">
-    {% else %}
-        <img src="{% static 'no-profile-picture.png' %}" alt="No profile image available">
-    {% endif %}
-{% endfor %}
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        max-width: 3000px;
+    }
 
-<br><br>
-<h4> Time is money, buddy Hurry up!</h4>
-<h4> {{ time }} </h4>
+    .home-in {
+        text-align: center;
+    }
 
-</center>
+    .body-container {
+        display: flex;
+    }
+
+    .header {
+        display: flex;
+        text-align: center;
+        color:white;
+        background-color: darkslategray;
+        height: 90px;
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+
+    .coding-icon {
+        height: 70px;
+        border: 2px solid gray;
+        border-radius: 50%;
+        margin-right: 70px;
+        margin-top: 6px;
+        margin-left: 70px;
+    }
+
+
+    h1 {
+        padding-top: 11px;
+    }
+
+    .body-homepage {
+        flex: 1;
+        margin-left: 65px;
+        padding-top: 9px;
+    }
+
+    h3 {
+        color: darkslategrey;
+    }
+
+    .google-icon {
+        width: 820px;
+        height: 300px;
+    }
+
+    .btn-pos {
+        text-align: center;
+        width: 120px;
+        height: 40px;
+    }
+
+    .sidebar {
+        width: 300px;
+        height: 500px;
+        padding: 20px;
+        background-color: rgb(33,37,41);
+        margin-right: -12.2px;
+        border: solid 2px;
+        color: whitesmoke;
+    }
+
+    .pos-fit {
+        font-weight: 4px;
+        color: green;
+    }
+
+    .btn-white {
+        color: #fff;
+        border-color: #fff;
+    }
+
+    .btn-white:hover {
+        color:#fff;
+        border-color: #fff;
+    }
+
+    .footer {
+        background-color: black;
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+
+    .learn {
+        text-align: center;
+        color: white;
+        padding-top: 7px;
+    }
+
+    .language-icon {
+        width: 40px;
+        height: 40px;
+        margin-left: 80px;
+        margin-bottom: 20px;
+    }
+</style>
 {% endblock %}

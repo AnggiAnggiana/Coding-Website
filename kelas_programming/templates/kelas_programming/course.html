@@ -2,7 +2,9 @@
 
 {% block content %}
 <center>
-<h1>Programming Course | Web Development</h1>
+<div class="header">
+  <h1>Programming Course | Web Development</h1>
+</div>
 <br><br>
 {% if request.user.username %}
   <h3>Welcome {{request.user.username}}, please pick your course here: </h3>
@@ -55,7 +57,17 @@
 {% endfor %}
 </div>
 
-
+<style>
+  .header {
+    text-align: center;
+    color:rgb(216, 201, 201);
+    background-color: rgb(29, 32, 32);
+    height: 90px;
+    margin-left: -12px;
+    margin-right: 0px;
+    padding-top: 8px;
+  }
+</style>
 {% endblock %}
 
 
